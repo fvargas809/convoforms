@@ -3,26 +3,6 @@ import Link from 'next/link'
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#FAFAF9] text-[#18181B]">
-      <header className="mx-auto max-w-6xl px-6 py-6 flex items-center justify-between">
-        <span className="font-mono text-sm tracking-tight text-[#18181B]">
-          convoforms
-        </span>
-        <div className="flex items-center gap-3">
-          <Link
-            href="/forms"
-            className="font-mono text-xs text-[#52525B] hover:text-[#18181B] transition-colors"
-          >
-            My forms
-          </Link>
-          <Link
-            href="/forms/new"
-            className="font-mono text-xs rounded-full border border-[#E4E4E7] px-4 py-2 hover:bg-[#F4F4F5] transition-colors"
-          >
-            Build a form →
-          </Link>
-        </div>
-      </header>
-
       <section className="mx-auto max-w-6xl px-6 pt-16 pb-24">
         <p className="font-mono text-xs tracking-wide text-[#6D28D9] uppercase mb-4">
           Forms, rebuilt as conversations
