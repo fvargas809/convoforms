@@ -32,10 +32,10 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col bg-[#FAFAF9]">
+        lang="en"
+        className={`${geistSans.variable} ${geistMono.variable} h-full antialiased bg-[#FAFAF9]`}
+      >
+      <body className="min-h-full flex flex-col bg-[#FAFAF9] pt-safe">
         <Nav />
         {children}
       </body>

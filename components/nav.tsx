@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function Nav() {
   return (
-    <div className="px-4 pt-[env(safe-area-inset-top)] mt-4 sm:px-6 sm:mt-6">
+    <div className="px-4 py-4 sm:px-6 sm:py-6">
       <nav className="mx-auto max-w-6xl flex items-center justify-between bg-white border border-[#E4E4E7] rounded-full px-5 py-2">
         <Link
           href="/"
