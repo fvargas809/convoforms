@@ -33,7 +33,7 @@ Rules for generating fields:
 - Each field needs a unique snake_case id derived from its meaning, a short label, and a one-sentence description written as an instruction for an AI agent asking about it conversationally.
 - Use single_choice when the description implies a fixed set of options (e.g. "team size as small/medium/large/enterprise"). Extract the literal options given.
 - Use boolean only for clear yes/no fields.
-- Mark a field required unless the description explicitly says it's optional.
+- - Mark a field required unless the description explicitly says it's optional, OR the field is only asked about conditionally via a rule (i.e. it appears as a "then.ask" target in your rules array). Conditionally-asked fields must always be marked required: false at the field level, since they are not required for every user, only for those matching the rule's condition.
 - If the description implies conditional logic (e.g. "if enterprise, also ask about budget"), add a rule object instead of guessing, only add rules that are explicitly implied.
 - Do not invent fields the description didn't ask for.
 - formName should be a short, human-readable title for the form, inferred from context if not stated.
