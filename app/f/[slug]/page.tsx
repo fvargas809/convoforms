@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'  
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useParams } from 'next/navigation'
 
@@ -135,7 +136,23 @@ export default function FormChatPage() {
       )}
 
       {isComplete ? (
-        <div style={{ textAlign: 'center', color: '#888' }}>This form is complete. Thanks!</div>
+        <div className="flex flex-col items-center gap-4 py-2">
+          <div style={{ textAlign: 'center', color: '#888' }}>This form is complete. Thanks!</div>
+          <Link
+            href="/"
+            style={{
+              padding: '10px 20px',
+              borderRadius: 9999,
+              background: '#18181B',
+              color: '#fff',
+              fontSize: 14,
+              fontWeight: 500,
+              textDecoration: 'none',
+            }}
+          >
+            Back home
+          </Link>
+        </div>
       ) : (
         <div style={{ display: 'flex', gap: 8 }}>
           <input
