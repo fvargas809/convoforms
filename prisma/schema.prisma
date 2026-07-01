@@ -55,6 +55,8 @@ model FormSession {
   retryCounts         Json     @default("{}")
   skippedFields       String[] @default([])
   needsReview         Boolean  @default(false)
+  workStatus          WorkStatus @default(NEW)
+  notes               String?
 
   resumeToken         String?  @unique
   startedAt           DateTime @default(now())
@@ -62,6 +64,12 @@ model FormSession {
 
   messages            Message[]
   fieldResults        FieldResult[]
+}
+
+enum WorkStatus {
+  NEW
+  IN_PROGRESS
+  COMPLETED
 }
 
 enum SessionStatus {

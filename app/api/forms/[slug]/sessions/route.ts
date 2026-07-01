@@ -21,6 +21,8 @@ export async function GET(
     select: {
       id: true,
       status: true,
+      workStatus: true,
+      notes: true,
       collectedData: true,
       skippedFields: true,
       needsReview: true,
