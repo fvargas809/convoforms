@@ -5,7 +5,7 @@ import { extractFieldValue } from '@/lib/extraction'
 import { checkConfirmation } from '@/lib/confirmation'
 import { getNextMessage } from '@/lib/conversation'
 
-const MAX_RETRIES = 2
+const MAX_RETRIES = 4
 
 type FieldDef = {
   id: string
@@ -97,8 +97,7 @@ export async function POST(
   let pendingConfirmation = session.pendingConfirmation as PendingConfirmation | null
   const retryCounts: Record<string, number> = { ...((session.retryCounts as Record<string, number>) || {}) }
   const skippedFields: string[] = [...session.skippedFields]
-  let needsReview: boolean = session.needsReview
-  let forceComplete = false
+  let needsReview = session.needsReview
 
   function incrementRetry(fieldId: string) {
     retryCounts[fieldId] = (retryCounts[fieldId] || 0) + 1
@@ -109,14 +108,14 @@ export async function POST(
   }
 
   function handleMaxedOutField(field: FieldDef) {
-    if (field.required) {
-      // can't skip a required field, flag the whole session for human review and end the conversation
-      needsReview = true
-      forceComplete = true
-    } else {
-      if (!skippedFields.includes(field.id)) skippedFields.push(field.id)
-    }
+  if (field.required) {
+    // reset retry count so the agent keeps trying naturally
+    retryCounts[field.id] = 0
+    needsReview = true
+  } else {
+    if (!skippedFields.includes(field.id)) skippedFields.push(field.id)
   }
+}
 
   await prisma.message.create({
     data: { sessionId, role: 'USER', content: userMessage },
@@ -182,12 +181,11 @@ export async function POST(
         pendingConfirmation = null
         if (hasMaxedOut(field.id)) handleMaxedOutField(field)
       }
-    } else if (field) {
-      // denied with no usable correction text
-      incrementRetry(field.id)
-      pendingConfirmation = null
-      if (hasMaxedOut(field.id)) handleMaxedOutField(field)
-    }
+        } else if (field) {
+        // denied with no usable correction text, clear confirmation and re-ask naturally
+        // don't increment retry here since the user is engaged, just not correcting via text
+        pendingConfirmation = null
+        }
   } else {
     const lastAssistantMessage = await prisma.message.findFirst({
       where: { sessionId, role: 'ASSISTANT' },
@@ -253,27 +251,17 @@ export async function POST(
     content: m.content,
   }))
 
-  let reply: string
-  let isComplete: boolean
-
-  if (forceComplete) {
-    reply = "Thanks for sharing what you could, looks like we got stuck on one question. Someone from our team will follow up to fill in the rest."
-    isComplete = true
-  } else {
-    const result = await getNextMessage(
-      {
-        formName: schema.formName,
-        fields: schema.fields,
-        rules: schema.rules,
-        collected,
-        pendingFields: finalPendingFields,
-        pendingConfirmation,
-      },
-      conversationHistory
-    )
-    reply = result.reply
-    isComplete = result.isComplete
-  }
+  const { reply, isComplete } = await getNextMessage(
+  {
+    formName: schema.formName,
+    fields: schema.fields,
+    rules: schema.rules,
+    collected,
+    pendingFields: finalPendingFields,
+    pendingConfirmation,
+  },
+  conversationHistory
+)
 
   await prisma.message.create({
     data: { sessionId, role: 'ASSISTANT', content: reply },

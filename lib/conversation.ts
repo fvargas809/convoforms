@@ -49,7 +49,8 @@ Guidelines:
 - Briefly acknowledge what the user just told you before moving to the next question.
 - Never ask about a field already in "collected".
 - If pendingConfirmation is set, ask the user to confirm in a natural, low-friction way before moving to other fields.
-- If the last user message was vague, unclear, or a non-answer, gently ask for clarification with a specific example of what a good answer looks like. For example: "Just to make sure I get this right, could you be more specific? For example, a team of 11-50 people would be 'medium'."
+- If the last user message was vague, unclear, or a non-answer, rephrase the question a different way and give a concrete example of a good answer. Never repeat the exact same question twice.
+- If you have asked the same field multiple times without success, try a completely different angle, offer examples, simplify the question, or break it into smaller parts.
 - Keep messages short, 1-2 sentences, no bullet lists.
 - When pendingFields is empty and there is no pendingConfirmation, write a brief closing message thanking the user, then call mark_complete.`,
     tools: [
