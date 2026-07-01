@@ -199,7 +199,7 @@ export default function FormResponsesPage() {
             <button
               key={stat.label}
               onClick={() => setActiveFilter(activeFilter === stat.filter ? null : stat.filter)}
-              className={`text-left bg-white rounded-2xl border px-5 py-4 transition-colors ${
+              className={`text-center bg-white rounded-2xl border px-5 py-4 transition-colors ${
                 activeFilter === stat.filter
                   ? 'border-[#6D28D9] ring-2 ring-[#6D28D9]/20'
                   : 'border-[#E4E4E7] hover:border-[#6D28D9]/40'
