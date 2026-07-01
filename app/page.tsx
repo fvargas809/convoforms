@@ -259,9 +259,41 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="mx-auto max-w-6xl px-6 py-10 text-center">
-        <p className="font-mono text-xs text-[#A1A1AA]">convoforms</p>
-      </footer>
+      {/* Contact */}
+      <section className="mx-auto max-w-6xl px-6 py-16 border-t border-[#E4E4E7]">
+        <div className="rounded-2xl border border-[#E4E4E7] bg-white p-10 flex items-center justify-between flex-wrap gap-6">
+          <div>
+            <p className="font-mono text-xs tracking-wide text-[#6D28D9] uppercase mb-2">
+              Get in touch
+            </p>
+            <h2 className="text-2xl font-semibold text-[#18181B] mb-2">
+              Have a question or want to learn more?
+            </h2>
+            <p className="text-sm text-[#52525B]">
+              Reach out and we&apos;ll get back to you.
+            </p>
+          </div>
+          <a  
+            href="mailto:convoforms@gmail.com"
+            className="rounded-full bg-[#6D28D9] text-white px-6 py-3 text-sm font-medium hover:bg-[#5B21B6] transition-colors shrink-0"
+          >
+            convoforms@gmail.com
+          </a>
+        </div>
+      </section>
+
+
+
+          <footer className="mx-auto max-w-6xl px-6 py-10 text-center">
+            <p className="font-mono text-xs text-[#A1A1AA] mb-2">convoforms</p>
+            <a
+              href="mailto:convoforms@gmail.com"
+              className="font-mono text-xs text-[#71717A] hover:text-[#6D28D9] transition-colors"
+            >
+              convoforms@gmail.com
+            </a>
+          </footer>
+      
     </div>
   )
 }
