@@ -101,6 +101,15 @@ export default function FormsListPage() {
                     >
                     {copiedSlug === form.slug ? 'copied' : 'copy link'}
                     </button>
+                    
+                    <Link
+                    href={`/forms/${form.slug}/edit`}
+                    className="font-mono text-xs rounded-full border border-[#E4E4E7] px-3 py-1.5 text-[#3F3F46] hover:bg-[#F4F4F5] transition-colors"
+                    >
+                    edit
+                    </Link>
+                    
+                    
                     <Link
                     href={`/forms/${form.slug}/responses`}
                     className="font-mono text-xs rounded-full border border-[#E4E4E7] px-3 py-1.5 text-[#3F3F46] hover:bg-[#F4F4F5] transition-colors"

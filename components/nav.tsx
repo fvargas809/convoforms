@@ -1,6 +1,14 @@
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function Nav() {
+  const pathname = usePathname()
+
+  // Public form pages are for respondents only, no nav
+  if (pathname?.startsWith('/f/')) return null
+
   return (
     <div className="px-4 py-4 sm:px-6 sm:py-6">
       <nav className="mx-auto max-w-6xl flex items-center justify-between bg-white border border-[#E4E4E7] rounded-full px-5 py-2">
