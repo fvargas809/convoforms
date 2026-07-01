@@ -23,15 +23,18 @@ export async function extractFieldValue(
     max_tokens: 500,
     system: `You are a data extraction engine. You will be given a field definition, the question that was just asked, and the user's reply.
 
-Your only task is to extract the value of that field from the user's reply, if present.
+      Your only task is to extract the value of that field from the user's reply, if present.
 
-Rules:
-- If the reply clearly answers the field, call submit_value with the parsed value and confidence "high".
-- If the reply answers it ambiguously, still call submit_value with your best parse, and set confidence to "low".
-- If the reply does not answer the field at all, call no_value_found with a one-line reason.
-- Never invent information not present in the reply.
-- For single_choice fields, only return one of the listed options, mapping loosely worded answers to the closest option.
-- For number/date fields, normalize formatting.`,
+      Rules:
+      - If the reply clearly and specifically answers the field, call submit_value with the parsed value and confidence "high".
+      - If the reply answers it ambiguously or vaguely (e.g. "maybe", "I don't know", "it depends", "something like that", "around", "kind of"), call submit_value with your best parse and set confidence to "low".
+      - If the reply does not answer the field at all, is off-topic, or is a question back to you, call no_value_found with a one-line reason.
+      - If the reply is a non-answer (e.g. "I don't know", "not sure", "whatever"), call no_value_found with reason "user gave a non-answer".
+      - Never invent information not present in the reply.
+      - For single_choice fields, only return one of the listed options, mapping loosely worded answers to the closest option. If the reply doesn't map clearly to any option, call no_value_found.
+      - For email fields, only accept a value that contains @ and a domain. Anything else is no_value_found.
+      - For number fields, normalize formatting (e.g. "two hundred" -> 200). If no number can be extracted, call no_value_found.
+      - For date fields, normalize to ISO format if a date is clearly given. Otherwise no_value_found.`,
     tools: [
       {
         name: 'submit_value',

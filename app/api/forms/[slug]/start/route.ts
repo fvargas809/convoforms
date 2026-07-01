@@ -33,8 +33,9 @@ export async function POST(
     },
   })
 
-  const schema = form.schema as unknown as FormSchema
-  const openingMessage = `Hi! I'll help you with "${schema.formName}". Let's get started, ${schema.fields[0]?.description ?? 'first question'}.`
+    const schema = form.schema as unknown as FormSchema
+    const firstField = schema.fields[0]
+    const openingMessage = `Hi! I'll help you with "${schema.formName}". Let's get started, what's your ${firstField?.label?.toLowerCase() ?? 'name'}?`
 
   await prisma.message.create({
     data: { sessionId: session.id, role: 'ASSISTANT', content: openingMessage },
