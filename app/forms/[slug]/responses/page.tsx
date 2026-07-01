@@ -104,6 +104,7 @@ export default function FormResponsesPage() {
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [editingNotes, setEditingNotes] = useState<Record<string, string>>({})
   const [savingId, setSavingId] = useState<string | null>(null)
+  const [activeFilter, setActiveFilter] = useState<WorkStatus | null>(null)
 
   const totalNew = sessions.filter((s) => (s.workStatus ?? 'NEW') === 'NEW').length
   const totalInProgress = sessions.filter((s) => s.workStatus === 'IN_PROGRESS').length
@@ -190,22 +191,27 @@ export default function FormResponsesPage() {
         {/* Stat cards */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
           {[
-            { label: 'Total', value: sessions.length, color: '#18181B' },
-            { label: 'New', value: totalNew, color: '#4338CA' },
-            { label: 'In progress', value: totalInProgress, color: '#B45309' },
-            { label: 'Completed', value: totalCompleted, color: '#16A34A' },
+            { label: 'Total', value: sessions.length, color: '#18181B', filter: null },
+            { label: 'New', value: totalNew, color: '#4338CA', filter: 'NEW' as WorkStatus },
+            { label: 'In progress', value: totalInProgress, color: '#B45309', filter: 'IN_PROGRESS' as WorkStatus },
+            { label: 'Completed', value: totalCompleted, color: '#16A34A', filter: 'COMPLETED' as WorkStatus },
           ].map((stat) => (
-            <div
+            <button
               key={stat.label}
-              className="bg-white rounded-2xl border border-[#E4E4E7] px-5 py-4"
+              onClick={() => setActiveFilter(activeFilter === stat.filter ? null : stat.filter)}
+              className={`text-left bg-white rounded-2xl border px-5 py-4 transition-colors ${
+                activeFilter === stat.filter
+                  ? 'border-[#6D28D9] ring-2 ring-[#6D28D9]/20'
+                  : 'border-[#E4E4E7] hover:border-[#6D28D9]/40'
+              }`}
             >
-              <p className="font-mono text-[10px] uppercase tracking-wide text-[#A1A1AA] mb-1">
+              <p className="font-mono text-[10px] uppercase tracking-wide text-[#52525B] mb-1">
                 {stat.label}
               </p>
               <p className="text-3xl font-semibold" style={{ color: stat.color }}>
                 {stat.value}
               </p>
-            </div>
+            </button>
           ))}
         </div>
 
@@ -221,7 +227,12 @@ export default function FormResponsesPage() {
         )}
 
         {/* Table */}
-        {sessions.length > 0 && (
+        {sessions.length > 0 && (() => {
+          const filteredSessions = activeFilter
+            ? sessions.filter((s) => (s.workStatus ?? 'NEW') === activeFilter)
+            : sessions
+
+          return (
           <div className="bg-white rounded-2xl border border-[#E4E4E7] overflow-hidden">
 
             {/* Table header */}
@@ -233,7 +244,7 @@ export default function FormResponsesPage() {
               ))}
             </div>
 
-            {sessions.map((session) => {
+            {filteredSessions.map((session) => {
               const isExpanded = expandedId === session.id
               const currentNotes = editingNotes[session.id] ?? session.notes ?? ''
               const workStatus = session.workStatus ?? 'NEW'
@@ -376,7 +387,8 @@ export default function FormResponsesPage() {
               )
             })}
           </div>
-        )}
+          )
+        })()}
       </div>
     </div>
   )
