@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid'
 
 type FormSchema = {
   formName: string
-  fields: Array<{ id: string; description: string; [key: string]: unknown }>
+  fields: Array<{ id: string; label: string; description: string; [key: string]: unknown }>
   [key: string]: unknown
 }
 
