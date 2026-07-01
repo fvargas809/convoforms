@@ -85,6 +85,61 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Use cases */}
+      <section className="mx-auto max-w-6xl px-6 py-20 border-t border-[#E4E4E7]">
+        <p className="font-mono text-xs tracking-wide text-[#6D28D9] uppercase mb-4">
+          Built for any team
+        </p>
+        <h2 className="text-2xl font-semibold mb-12 max-w-xl">
+          Wherever you collect information, convoforms fits in.
+        </h2>
+        <div className="grid sm:grid-cols-3 gap-6">
+          {[
+            {
+              icon: '🎧',
+              title: 'Support requests',
+              body: 'Let customers describe their issue naturally. The agent gathers every detail you need before the ticket even lands in your queue.',
+            },
+            {
+              icon: '📋',
+              title: 'Intake and onboarding',
+              body: 'Replace long intake forms with a friendly conversation. New clients, patients, or employees feel heard from the very first interaction.',
+            },
+            {
+              icon: '🎯',
+              title: 'Lead qualification',
+              body: 'Qualify prospects conversationally. Ask about team size, budget, and timeline without the friction of a static form that kills conversions.',
+            },
+            {
+              icon: '🔍',
+              title: 'Research and surveys',
+              body: 'Go deeper than checkboxes. The agent follows up on interesting answers, giving you richer data without a longer form.',
+            },
+            {
+              icon: '📅',
+              title: 'Event registration',
+              body: 'Collect dietary needs, session preferences, and contact details in a conversation that feels effortless rather than administrative.',
+            },
+            {
+              icon: '💬',
+              title: 'Feedback collection',
+              body: 'Ask for feedback in the moment. A conversational prompt gets more honest, detailed responses than a 1-to-5 rating scale ever will.',
+            },
+          ].map((item) => (
+            <div
+              key={item.title}
+              className="rounded-2xl border border-[#E4E4E7] bg-white p-6"
+            >
+              <span className="text-2xl mb-4 block">{item.icon}</span>
+              <h3 className="font-medium text-[#18181B] mb-2">{item.title}</h3>
+              <p className="text-sm text-[#52525B] leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      
+
       <section className="mx-auto max-w-6xl px-6 py-20 border-t border-[#E4E4E7]">
         <h2 className="text-2xl font-semibold mb-12">How it works</h2>
         <div className="grid sm:grid-cols-3 gap-10">
@@ -118,9 +173,10 @@ export default function Home() {
       <section className="mx-auto max-w-6xl px-6 py-20 border-t border-[#E4E4E7]">
         <div className="rounded-2xl bg-[#18181B] text-white p-10 flex items-center justify-between flex-wrap gap-6">
           <div>
-            <h2 className="text-2xl font-semibold mb-2">Ready to retire your forms?</h2>
+            <h2 className="text-2xl font-semibold mb-2">Start with your support queue.</h2>
             <p className="text-[#A1A1AA] text-sm">
-              Describe one, publish it, share the link. Takes about a minute.
+              Build a support request form in under a minute. Share the link, and let
+              the agent do the intake for you.
             </p>
           </div>
           <Link
