@@ -3,6 +3,25 @@ import Link from 'next/link'
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#FAFAF9] text-[#18181B]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'SoftwareApplication',
+            name: 'Convoforms',
+            applicationCategory: 'BusinessApplication',
+            description: 'Replace static forms with AI-powered conversational interfaces. Collect support requests, qualify leads, run surveys, manage intake, and gather feedback through natural chat.',
+            url: 'https://convoforms.app',
+            offers: {
+              '@type': 'Offer',
+              price: '0',
+              priceCurrency: 'USD',
+            },
+            keywords: 'conversational forms, support request form, intake form, lead qualification, survey tool, feedback collection, event registration',
+          }),
+        }}
+      />
       <section className="mx-auto max-w-6xl px-6 pt-16 pb-24">
         <p className="font-mono text-xs tracking-wide text-[#6D28D9] uppercase mb-4">
           Forms, rebuilt as conversations
@@ -13,8 +32,9 @@ export default function Home() {
           <span className="text-[#6D28D9]">Let them talk instead.</span>
         </h1>
         <p className="mt-6 text-lg text-[#52525B] max-w-xl leading-relaxed">
-          Describe what you need to know in plain language. An AI agent asks for it
-          naturally, one question at a time, and hands you back clean, validated data.
+          Convoforms replaces static forms with AI-powered conversations. Collect
+          support requests, qualify leads, run intake forms, register event attendees,
+          and gather survey feedback, all through natural chat. No form builder needed.
         </p>
 
         <div className="mt-9 flex items-center gap-4">
@@ -99,42 +119,67 @@ export default function Home() {
               icon: '🎧',
               title: 'Support requests',
               body: 'Let customers describe their issue naturally. The agent gathers every detail you need before the ticket even lands in your queue.',
+              href: '/solutions/ai-support-request-form',
             },
             {
               icon: '📋',
               title: 'Intake and onboarding',
               body: 'Replace long intake forms with a friendly conversation. New clients, patients, or employees feel heard from the very first interaction.',
+              href: '/solutions/conversational-intake-form',
             },
             {
               icon: '🎯',
               title: 'Lead qualification',
               body: 'Qualify prospects conversationally. Ask about team size, budget, and timeline without the friction of a static form that kills conversions.',
+              href: '/solutions/lead-qualification-form',
             },
             {
               icon: '🔍',
               title: 'Research and surveys',
               body: 'Go deeper than checkboxes. The agent follows up on interesting answers, giving you richer data without a longer form.',
+              href: '/solutions/research-and-surveys',
             },
             {
               icon: '📅',
               title: 'Event registration',
               body: 'Collect dietary needs, session preferences, and contact details in a conversation that feels effortless rather than administrative.',
+              href: '/solutions/event-registration',
             },
             {
               icon: '💬',
               title: 'Feedback collection',
               body: 'Ask for feedback in the moment. A conversational prompt gets more honest, detailed responses than a 1-to-5 rating scale ever will.',
+              href: '/solutions/feedback-collection',
             },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="rounded-2xl border border-[#E4E4E7] bg-white p-6"
-            >
-              <span className="text-2xl mb-4 block">{item.icon}</span>
-              <h3 className="font-medium text-[#18181B] mb-2">{item.title}</h3>
-              <p className="text-sm text-[#52525B] leading-relaxed">{item.body}</p>
-            </div>
-          ))}
+          ].map((item) => {
+            const inner = (
+              <>
+                <span className="text-2xl mb-4 block">{item.icon}</span>
+                <h3 className="font-medium text-[#18181B] mb-2">{item.title}</h3>
+                <p className="text-sm text-[#52525B] leading-relaxed">{item.body}</p>
+                {item.href && (
+                  <p className="font-mono text-xs text-[#6D28D9] mt-4">Learn more →</p>
+                )}
+              </>
+            )
+
+            return item.href ? (
+              <Link
+                key={item.title}
+                href={item.href}
+                className="rounded-2xl border border-[#E4E4E7] bg-white p-6 hover:border-[#6D28D9] hover:shadow-sm transition-all"
+              >
+                {inner}
+              </Link>
+            ) : (
+              <div
+                key={item.title}
+                className="rounded-2xl border border-[#E4E4E7] bg-white p-6"
+              >
+                {inner}
+              </div>
+            )
+          })}
         </div>
       </section>
 
@@ -185,6 +230,32 @@ export default function Home() {
           >
             Create your first form
           </Link>
+        </div>
+      </section>
+
+      {/* Solutions links */}
+      <section className="mx-auto max-w-6xl px-6 py-12 border-t border-[#E4E4E7]">
+        <p className="font-mono text-xs tracking-wide text-[#A1A1AA] uppercase mb-4">
+          Solutions
+        </p>
+        <div className="flex flex-wrap gap-3">
+          {[
+              { label: 'Conversational intake form', href: '/solutions/conversational-intake-form' },
+              { label: 'AI support request form', href: '/solutions/ai-support-request-form' },
+              { label: 'Replace Typeform with chat', href: '/solutions/replace-typeform-with-chat' },
+              { label: 'Lead qualification form', href: '/solutions/lead-qualification-form' },
+              { label: 'Research and surveys', href: '/solutions/research-and-surveys' },
+              { label: 'Event registration', href: '/solutions/event-registration' },
+              { label: 'Feedback collection', href: '/solutions/feedback-collection' },
+            ].map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="font-mono text-xs rounded-full border border-[#E4E4E7] px-4 py-2 text-[#52525B] hover:border-[#6D28D9] hover:text-[#6D28D9] transition-colors"
+            >
+              {link.label} →
+            </Link>
+          ))}
         </div>
       </section>
 
